@@ -1,0 +1,335 @@
+Задание 1:
+
+using System;
+
+
+public class Footballer
+{
+    public string Name { get; set; }
+    public int Number { get; set; }
+
+    public Footballer(string name, int number)
+    {
+        Name = name;
+        Number = number;
+    }
+}
+
+public class FootballTeam
+{
+    private Footballer[] players = new Footballer[11];
+
+    public Footballer this[int index]
+    {
+        get
+        {
+            if (index < 0 || index >= players.Length)
+                throw new IndexOutOfRangeException("Некорректный индекс");
+            return players[index];
+        }
+        set
+        {
+            if (index < 0 || index >= players.Length)
+                throw new IndexOutOfRangeException("Некорректный индекс");
+            players[index] = value;
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        FootballTeam inter = new FootballTeam();
+        inter[0] = new Footballer("Ronaldo", 7);
+
+        try
+        {
+            inter[20] = new Footballer("Messi", 10); 
+        }
+        catch (IndexOutOfRangeException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+}
+
+
+Задание 2:
+using System;
+
+public class Player
+{
+    public string Name { get; set; }
+    public int Number { get; set; }
+}
+
+public class Team
+{
+    private Player[] players = new Player[11];
+
+    public Player this[int index]
+    {
+        get
+        {
+            if (index < 0 || index >= players.Length)
+                throw new IndexOutOfRangeException("Некорректный индекс");
+            return players[index];
+        }
+        set
+        {
+            if (index < 0 || index >= players.Length)
+                throw new IndexOutOfRangeException("Некорректный индекс");
+            players[index] = value;
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Team inter = new Team();
+
+        try
+        {
+            inter[0] = new Player { Name = "Ronaldo", Number = 7 };
+            inter[20] = new Player { Name = "Messi", Number = 10 }; 
+        }
+        catch (IndexOutOfRangeException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+}
+
+
+Задание 3:
+using System;
+
+class Word
+{
+    public string Source { get; }
+    public string Target { get; set; }
+
+    public Word(string source, string target)
+    {
+        Source = source;
+        Target = target;
+    }
+}
+
+class Dictionary
+{
+    private Word[] words;
+
+    public Dictionary()
+    {
+        words = new Word[]
+        {
+            new Word("red", "красный"),
+            new Word("blue", "синий"),
+            new Word("green", "зеленый")
+        };
+    }
+
+    public string this[string source]
+    {
+        get
+        {
+            foreach (var word in words)
+            {
+                if (word.Source.Equals(source, StringComparison.OrdinalIgnoreCase))
+                    return word.Target;
+            }
+            throw new ArgumentException("Слово не найдено");
+        }
+        set
+        {
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (words[i].Source.Equals(source, StringComparison.OrdinalIgnoreCase))
+                {
+                    words[i].Target = value;
+                    return;
+                }
+            }
+            throw new ArgumentException("Слово не найдено");
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Dictionary dictionary = new Dictionary();
+
+        Console.WriteLine(dictionary["red"]); 
+
+        dictionary["red"] = "алый"; 
+        Console.WriteLine(dictionary["red"]); 
+    }
+}
+
+
+Задание 4:
+using System;
+
+class CircularArray
+{
+    private int[] array;
+    private int currentIndex;
+
+    public CircularArray(int size)
+    {
+        array = new int[size];
+        currentIndex = 0;
+    }
+
+    public int CurrentValue
+    {
+        get
+        {
+            return array[currentIndex];
+        }
+        set
+        {
+            array[currentIndex] = value;
+            currentIndex = (currentIndex + 1) % array.Length;
+        }
+    }
+
+    public void DisplayArray()
+    {
+        Console.WriteLine("Содержимое массива:");
+        foreach (var item in array)
+        {
+            Console.Write(item + " ");
+        }
+        Console.WriteLine();
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        CircularArray circularArray = new CircularArray(3);
+
+        circularArray.CurrentValue = 10;
+        circularArray.CurrentValue = 20;
+        circularArray.CurrentValue = 30;
+
+        circularArray.DisplayArray(); 
+
+        circularArray.CurrentValue = 40; 
+        circularArray.DisplayArray(); 
+
+        Console.WriteLine(circularArray.CurrentValue); 
+        circularArray.CurrentValue = 50; 
+        circularArray.DisplayArray(); 
+    }
+}
+
+
+Задание 5:
+using System;
+
+class NonNegativeNumber
+{
+    private int number;
+
+    public NonNegativeNumber()
+    {
+        number = 0;
+    }
+
+    public int this[int index]
+    {
+        get
+        {
+            return (number / (int)Math.Pow(10, index)) % 10;
+        }
+        set
+        {
+            int digit = value % 10; 
+            number = (number / (int)Math.Pow(10, index + 1)) * (int)Math.Pow(10, index + 1) + digit * (int)Math.Pow(10, index) + (number % (int)Math.Pow(10, index));
+        }
+    }
+
+    public override string ToString()
+    {
+        return number.ToString();
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        NonNegativeNumber num = new NonNegativeNumber();
+
+        num[0] = 5; 
+        num[1] = 3; 
+        num[2] = 7; 
+
+        Console.WriteLine(num); 
+
+        num[0] = 2; 
+        Console.WriteLine(num);
+    }
+}
+
+
+Задание 6:
+using System;
+
+class TextArray
+{
+    private string[] array;
+
+    public TextArray(int size)
+    {
+        array = new string[size];
+    }
+
+    public string this[int index]
+    {
+        get { return array[index % array.Length]; }
+        set { array[index % array.Length] = value; }
+    }
+
+    public char this[int row, int column]
+    {
+        get
+        {
+            string element = array[row % array.Length];
+            return element[column % element.Length];
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        TextArray texts = new TextArray(3);
+
+        texts[0] = "Hello";
+        texts[1] = "Привет";
+        texts[2] = "Bonjour";
+
+        Console.WriteLine(texts[0]); 
+        Console.WriteLine(texts[1]); 
+        Console.WriteLine(texts[2]); 
+
+        Console.WriteLine(texts[3]); 
+        Console.WriteLine(texts[4]); 
+
+        Console.WriteLine(texts[0, 1]); 
+        Console.WriteLine(texts[1, 4]); 
+        Console.WriteLine(texts[2, 5]); 
+    }
+}
+
