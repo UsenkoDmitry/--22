@@ -188,21 +188,15 @@ class IntegerArray
         index = 0;
     }
 
-    public int this[int i]
-    {
-        get { return array[i % array.Length]; }
-        set { array[i % array.Length] = value; }
-    }
-
     public int Property
     {
-        get 
+        get
         {
             int value = array[index];
-            index = (index + 1) % array.Length; 
-            return value; 
+            index = (index + 1) % array.Length;
+            return value;
         }
-        set 
+        set
         {
             array[index] = value;
         }
@@ -210,10 +204,14 @@ class IntegerArray
 
     public void PrintArray()
     {
-        Console.WriteLine("Current array values:");
-        foreach (var item in array)
+        Console.WriteLine("Текущие значения массива:");
+        for (int i = 0; i < array.Length; i++)
         {
-            Console.Write(item + " ");
+            Console.Write(array[i]);
+            if (i < array.Length - 1)
+            {
+                Console.Write(", ");
+            }
         }
         Console.WriteLine();
     }
@@ -223,22 +221,18 @@ class Program
 {
     static void Main()
     {
-        int[] sampleArray = new int[100];
-        for (int i = 0; i < 100; i++)
-        {
-            sampleArray[i] = (i + 1) * 10; // Заполнение массива значениями
-        }
-        
-        IntegerArray integers = new IntegerArray(sampleArray);
-        integers.PrintArray(); // Выводит весь массив
+        int[] initialValues = { 1, 2, 3, 4, 5 };
+        var integers = new IntegerArray(initialValues);
 
-        for (int i = 0; i < 100; i++)
+        integers.PrintArray();
+
+        for (int i = 0; i < 7; i++)
         {
-            Console.WriteLine(integers.Property); // Вывод значений массива 100 раз
+            Console.WriteLine(integers.Property);
         }
 
-        integers.Property = 100; // Пример изменения одного из значений
-        integers.PrintArray(); // Выводит изменённый массив
+        integers.Property = 0; 
+        integers.PrintArray();
     }
 }
 
