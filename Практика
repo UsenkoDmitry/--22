@@ -176,38 +176,35 @@ class Program
 Задание 4:
 using System;
 
-class CircularArray
+class IntegerArray
 {
     private int[] array;
-    private int currentIndex;
+    private int index;
 
-    public CircularArray(int size)
+    public IntegerArray(int size)
     {
         array = new int[size];
-        currentIndex = 0;
+        index = 0;
     }
 
-    public int CurrentValue
+    public int this[int i]
     {
-        get
-        {
-            return array[currentIndex];
-        }
-        set
-        {
-            array[currentIndex] = value;
-            currentIndex = (currentIndex + 1) % array.Length;
-        }
+        get { return array[i % array.Length]; }
+        set { array[i % array.Length] = value; }
     }
 
-    public void DisplayArray()
+    public int Property
     {
-        Console.WriteLine("Содержимое массива:");
-        foreach (var item in array)
+        get 
         {
-            Console.Write(item + " ");
+            int value = array[index];
+            index = (index + 1) % array.Length; 
+            return value; 
         }
-        Console.WriteLine();
+        set 
+        {
+            array[index] = value;
+        }
     }
 }
 
@@ -215,20 +212,22 @@ class Program
 {
     static void Main()
     {
-        CircularArray circularArray = new CircularArray(3);
+        IntegerArray integers = new IntegerArray(5);
+        
+        integers[0] = 10;
+        integers[1] = 20;
+        integers[2] = 30;
+        integers[3] = 40;
+        integers[4] = 50;
 
-        circularArray.CurrentValue = 10;
-        circularArray.CurrentValue = 20;
-        circularArray.CurrentValue = 30;
+        Console.WriteLine(integers.Property); // 10
+        Console.WriteLine(integers.Property); // 20
+        Console.WriteLine(integers.Property); // 30
 
-        circularArray.DisplayArray(); 
-
-        circularArray.CurrentValue = 40; 
-        circularArray.DisplayArray(); 
-
-        Console.WriteLine(circularArray.CurrentValue); 
-        circularArray.CurrentValue = 50; 
-        circularArray.DisplayArray(); 
+        integers.Property = 100; // Изменяет 30
+        Console.WriteLine(integers.Property); // 40
+        Console.WriteLine(integers.Property); // 50
+        Console.WriteLine(integers.Property); // 100
     }
 }
 
