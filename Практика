@@ -181,9 +181,9 @@ class IntegerArray
     private int[] array;
     private int index;
 
-    public IntegerArray(int size)
+    public IntegerArray(int[] inputArray)
     {
-        array = new int[size];
+        array = inputArray;
         index = 0;
     }
 
@@ -212,13 +212,8 @@ class Program
 {
     static void Main()
     {
-        IntegerArray integers = new IntegerArray(5);
-        
-        integers[0] = 10;
-        integers[1] = 20;
-        integers[2] = 30;
-        integers[3] = 40;
-        integers[4] = 50;
+        int[] sampleArray = { 10, 20, 30, 40, 50 };
+        IntegerArray integers = new IntegerArray(sampleArray);
 
         Console.WriteLine(integers.Property); // 10
         Console.WriteLine(integers.Property); // 20
@@ -230,6 +225,7 @@ class Program
         Console.WriteLine(integers.Property); // 100
     }
 }
+
 
 
 Задание 5:
