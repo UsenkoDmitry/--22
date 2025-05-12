@@ -215,14 +215,14 @@ class Program
         int[] sampleArray = { 10, 20, 30, 40, 50 };
         IntegerArray integers = new IntegerArray(sampleArray);
 
-        Console.WriteLine(integers.Property); // 10
-        Console.WriteLine(integers.Property); // 20
-        Console.WriteLine(integers.Property); // 30
+        Console.WriteLine(integers.Property); 
+        Console.WriteLine(integers.Property); 
+        Console.WriteLine(integers.Property); 
 
-        integers.Property = 100; // Изменяет 30
-        Console.WriteLine(integers.Property); // 40
-        Console.WriteLine(integers.Property); // 50
-        Console.WriteLine(integers.Property); // 100
+        integers.Property = 100; 
+        Console.WriteLine(integers.Property); 
+        Console.WriteLine(integers.Property); 
+        Console.WriteLine(integers.Property); 
     }
 }
 
